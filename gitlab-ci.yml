@@ -1,0 +1,53 @@
+# .gitlab-ci.yml - GitLab CI/CD Pipeline
+stages:
+  - build
+  - test
+  - security_check
+  - deploy
+
+variables:
+  DOCKER_IMAGE: "registry.gitlab.com/your_project/app:latest"
+
+build:
+  stage: build
+  script:
+    - echo "Building the application..."
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+
+unit_test:
+  stage: test
+  script:
+    - echo "Running Unit Tests..."
+    - npm install
+    - npm test
+
+code_quality:
+  stage: security_check
+  script:
+    - echo "Running Code Quality Checks..."
+    - npm install eslint
+    - npx eslint .
+    - docker run --rm aquasec/trivy image $DOCKER_IMAGE
+
+deploy_staging:
+  stage: deploy
+  environment:
+    name: staging
+    url: https://staging.yourapp.com
+  script:
+    - echo "Deploying to Staging..."
+    - kubectl apply -f k8s/staging-deployment.yaml
+  only:
+    - main
+
+deploy_production:
+  stage: deploy
+  environment:
+    name: production
+    url: https://yourapp.com
+  script:
+    - echo "Deploying to Production..."
+    - kubectl apply -f k8s/production-deployment.yaml
+  only:
+    - tags
