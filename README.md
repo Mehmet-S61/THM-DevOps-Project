@@ -5,4 +5,5 @@ Dies ist ein Beispielprojekt zur Umsetzung einer CI/CD Pipeline mit Docker, Kube
 Update README mit Projektbeschreibung
 
 🚀 CI/CD Testlauf vom 4. April
+🚀 Trigger CI/CD Workflow am 4. April
 
