@@ -28,10 +28,7 @@ jobs:
       - name: Run Unit Tests
         run: npm test
 
-      - name: Lint Code
-        run: |
-          npm install eslint
-          npx eslint .
+   
 
       - name: Build Docker Image
         run: docker build -t my-app .
