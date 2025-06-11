@@ -10,3 +10,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`App läuft unter http://localhost:${port}`);
 });
+
+nano index.js
+
